@@ -1,15 +1,34 @@
-/**
- * Every exported symbol ideally should have a documentation line.
+/** Returns the path to the user's cache directory.
  *
- * It is important that documentation is easily human readable,
- * but there is also a need to provide additional styling information to ensure
- * generated documentation is more rich text.
- * Therefore JSDoc should generally follow markdown markup to enrich the text.
- *
- * follow https://deno.land/std/style_guide.md
- *
- * @param foo - Description of non obvious parameter
+ * The returned value depends on the operating system and is either a string,
+ * containing a value from the following table, or `null`.
+ * 
+ * |Platform | Value                               | Example                          |
+ * | ------- | ----------------------------------- | -------------------------------- |
+ * | Linux   | `$XDG_CACHE_HOME` or `$HOME`/.cache | /home/justjavac/.cache           |
+ * | macOS   | `$HOME`/Library/Caches              | /Users/justjavac/Library/Caches  |
+ * | Windows | `{FOLDERID_LocalAppData}`           | C:\Users\justjavac\AppData\Local |
  */
-export default function starter(foo: string): string {
-  return foo;
+export default function cache_dir(): string | null {
+  switch (Deno.build.os) {
+    case "linux": {
+      const xdg = Deno.env.get("XDG_CACHE_HOME");
+      if (xdg) return xdg;
+
+      const home = Deno.env.get("HOME");
+      if (home) return `${home}/.cache`;
+      break;
+    }
+
+    case "darwin": {
+      const home = Deno.env.get("HOME");
+      if (home) return `${home}/Library/Caches`;
+      break;
+    }
+
+    case "windows":
+      return Deno.env.get("FOLDERID_LocalAppData") ?? null;
+  }
+
+  return null;
 }

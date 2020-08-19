@@ -1,49 +1,38 @@
-# deno_starter
+# deno_cache_dir
 
-[![tag](https://img.shields.io/github/release/justjavac/deno_starter)](https://github.com/justjavac/deno_starter/releases)
-[![Build Status](https://github.com/justjavac/deno_starter/workflows/ci/badge.svg?branch=master)](https://github.com/justjavac/deno_starter/actions)
-[![license](https://img.shields.io/github/license/justjavac/deno_starter)](https://github.com/justjavac/deno_starter/blob/master/LICENSE)
+[![tag](https://img.shields.io/github/release/justjavac/deno_cache_dir)](https://github.com/justjavac/deno_cache_dir/releases)
+[![Build Status](https://github.com/justjavac/deno_cache_dir/workflows/ci/badge.svg?branch=master)](https://github.com/justjavac/deno_cache_dir/actions)
+[![license](https://img.shields.io/github/license/justjavac/deno_cache_dir)](https://github.com/justjavac/deno_cache_dir/blob/master/LICENSE)
 [![](https://img.shields.io/badge/deno-v1.3-green.svg)](https://github.com/denoland/deno)
 
-Quickly start a Deno module.
+Returns the path to the user's cache directory.
 
-## 🧐 What's inside?
+> _In v1.1.2(2020.06.26), Deno [Remove `Deno.dir` and dirs dependency #6385](https://github.com/denoland/deno/pull/6385)_
 
-A quick look at the files and directories you'll see in a Deno project.
+The returned value depends on the operating system and is either a string,
+containing a value from the following table, or `null`.
 
-    .
-    ├─ .github
-    │   └─ workflows
-    │       └─ ci.yml
-    ├─ .vscode
-    ├─ .vscode
-    │   ├─ extensions.json
-    │   └─ settings.json
-    ├─ .gitattributes
-    ├─ .gitignore
-    ├─ CHANGELOG.md
-    ├─ LICENSE
-    ├─ mod_test.ts
-    ├─ mod.ts
-    └─ README.md
+|Platform | Value                               | Example                          |
+| ------- | ----------------------------------- | -------------------------------- |
+| Linux   | `$XDG_CACHE_HOME` or `$HOME`/.cache | /home/justjavac/.cache           |
+| macOS   | `$HOME`/Library/Caches              | /Users/justjavac/Library/Caches  |
+| Windows | `{FOLDERID_LocalAppData}`           | C:\Users\justjavac\AppData\Local |
 
-1.  **`.github\workflows\ci.yml`**: GitHub Actions.
+## Usage
 
-1.  **`.vscode\extensions.json`**: Workspace recommended extensions for Deno Developers.
+Requires `allow-env` permission.
 
-1.  **`.gitignore`**: This file tells git which files it should not track / not maintain a version history for.
+Returns `null` if there is no applicable directory or if any other error occurs.
 
-1.  **`CHANGELOG.md`**: This file contains a curated, chronologically ordered list of notable changes for each version of a project. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-    and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+```ts
+import cache_dir from "https://deno.land/x/cache_dir/mod.ts";
 
-1.  **`LICENSE`**: Deno is licensed under the MIT license.
-
-1.  **`mod.ts`**: Deno's default entry point. The filename mod.ts follows Rust’s convention, is shorter than index.ts, and doesn’t come with any preconceived notions about how it might work. Deno does not treat "index.js" or "index.ts" in a special way. By using these filenames, it suggests that they can be left out of the module specifier when they cannot. This is confusing.
-
-1.  **`mod_test.ts`**: Each module should come with its test as a sibling with the name `modulename_test.ts`. For example the module `foo.ts` should come with its sibling `foo_test.ts`.
-
-1.  **`README.md`**: A text file containing useful reference information about your project.
+cache_dir();
+// Lin: "/home/justjavac/.cache"
+// Mac: "/Users/justjavac/Library/Caches"
+// Win: "C:\Users\justjavac\AppData\Local"
+```
 
 ## License
 
-[deno_starter](https://github.com/justjavac/deno_starter) is released under the MIT License. See the bundled [LICENSE](./LICENSE) file for details.
+[deno_cache_dir](https://github.com/justjavac/deno_cache_dir) is released under the MIT License. See the bundled [LICENSE](./LICENSE) file for details.
