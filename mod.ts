@@ -9,7 +9,7 @@
  * | macOS   | `$HOME`/Library/Caches              | /Users/justjavac/Library/Caches  |
  * | Windows | `{FOLDERID_LocalAppData}`           | C:\Users\justjavac\AppData\Local |
  */
-export default function cache_dir(): string | null {
+export default function cacheDir(): string | null {
   switch (Deno.build.os) {
     case "linux": {
       const xdg = Deno.env.get("XDG_CACHE_HOME");

@@ -25,9 +25,9 @@ Requires `allow-env` permission.
 Returns `null` if there is no applicable directory or if any other error occurs.
 
 ```ts
-import cache_dir from "https://deno.land/x/cache_dir/mod.ts";
+import cacheDir from "https://deno.land/x/cache_dir/mod.ts";
 
-cache_dir();
+cacheDir();
 // Lin: "/home/justjavac/.cache"
 // Mac: "/Users/justjavac/Library/Caches"
 // Win: "C:\Users\justjavac\AppData\Local"
